@@ -1,7 +1,46 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
+  var futureContainer = document.getElementById("future");
+  var presentContainer = document.getElementById("present");
+  var pastContainer = document.getElementById("past");
+
+  var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+
+  for (let i = 0; i < hours.length; i++) {
+
+  //Creating Elements  
+    var hour = document.createElement("div");
+    var textAreaDiv = document.createElement("div");
+    var textArea = document.createElement("textarea");
+    var saveBtn = document.createElement("button");
+    var saveIcon = document.createElement("i");
+
+    //Styling
+    textAreaDiv.className = "col-2 col-md-1 hour text-center py-3";
+    textAreaDiv.textContent = hours[i];
+    textArea.className = "col-8 col-md-10 description";
+    textArea.rows = "3";
+    saveBtn.className = "btn saveBtn col-2 col-md-1";
+    saveBtn.ariaLabel = "save";
+    saveIcon.className = "fas fa-save";
+    saveIcon.ariaHidden = "true";
+
+    saveBtn.appendChild(saveIcon);
+    hour.appendChild(textAreaDiv);
+    hour.appendChild(textArea);
+    hour.appendChild(saveBtn);
+
+    if (hours[i] <= 12) {
+      hour.className = "row time-block past";
+      pastContainer.appendChild(hour);
+    } else if (hours[i] === 13) {
+      hour.className = "row time-block present";
+      presentContainer.appendChild(hour);
+    } else {
+      hour.className = "row time-block future";
+      futureContainer.appendChild(hour);
+    }
+  }
+
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. HINT: What does `this` reference in the click listener
@@ -20,5 +59,11 @@ $(function () {
     // attribute of each time-block be used to do this?
     //
     // TODO: Add code to display the current date in the header of the page.
+    
+    displayDay();
   });
   
+  function displayDay(){
+    var currentDay = dayjs().format("dddd, MMMM D");
+    $("#currentDay").text(currentDay);
+  }
