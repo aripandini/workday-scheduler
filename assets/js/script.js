@@ -6,7 +6,8 @@ $(function () {
   var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
   for (let i = 0; i < hours.length; i++) {
-
+  
+    var currentHour = dayjs().hour(hours[i]).format("h a");
   //Creating Elements  
     var hour = document.createElement("div");
     var textAreaDiv = document.createElement("div");
@@ -16,7 +17,7 @@ $(function () {
 
     //Styling
     textAreaDiv.className = "col-2 col-md-1 hour text-center py-3";
-    textAreaDiv.textContent = hours[i];
+    textAreaDiv.textContent = currentHour;
     textArea.className = "col-8 col-md-10 description";
     textArea.rows = "3";
     saveBtn.className = "btn saveBtn col-2 col-md-1";
@@ -29,10 +30,10 @@ $(function () {
     hour.appendChild(textArea);
     hour.appendChild(saveBtn);
 
-    if (hours[i] <= 12) {
+    if (compareHour(hours[i]) < 0) {
       hour.className = "row time-block past";
       pastContainer.appendChild(hour);
-    } else if (hours[i] === 13) {
+    } else if (compareHour(hours[i]) === 0) {
       hour.className = "row time-block present";
       presentContainer.appendChild(hour);
     } else {
@@ -66,4 +67,13 @@ $(function () {
   function displayDay(){
     var currentDay = dayjs().format("dddd, MMMM D");
     $("#currentDay").text(currentDay);
+  }
+
+  function compareHour(hour){ 
+    var currentHour = dayjs().hour();
+    var compareHour = dayjs().hour(hour);
+    currentHour = dayjs().hour(currentHour);
+
+    return compareHour.diff(currentHour, "hours"); 
+
   }
