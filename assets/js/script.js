@@ -21,12 +21,13 @@ $(function () {
     textArea.className = "col-8 col-md-10 description";
     textArea.id = hours[i]+ "textArea";
     textArea.rows = "3";
+    
     for  (let j = 0; j < scheduleValues.length; j++) {
       if (scheduleValues[j].id === hours[i]) {
         textArea.textContent = scheduleValues[j].value; 
       }
-
     }
+
     saveBtn.className = "btn saveBtn col-2 col-md-1";
     saveBtn.ariaLabel = "save";
     saveBtn.id = hours[i];
@@ -49,6 +50,7 @@ $(function () {
       futureContainer.appendChild(hour);
     }
   }
+
   //Saving
   var saveBtnClick = document.getElementsByClassName("saveBtn");
   for (let i = 0; i < saveBtnClick.length; i++) {
@@ -58,10 +60,7 @@ $(function () {
     });
   }
 
-
-
-  
-
+  // Storage
   function readSchedulesFromStorage() {
     var schedules = localStorage.getItem("schedules");
     if (schedules) {
@@ -89,8 +88,7 @@ $(function () {
     saveSchedulesToStorage(schedules);
   }
 
-
-
+ //Showing Date
   function displayDay(){
     var currentDay = dayjs().format("dddd, MMMM D");
     $("#currentDay").text(currentDay);
